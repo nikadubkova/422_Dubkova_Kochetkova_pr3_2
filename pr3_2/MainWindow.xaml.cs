@@ -28,12 +28,12 @@ namespace pr3_2
 
         private void EquationType_Checked(object sender, RoutedEventArgs e)
         {
-            InputFieldsPanel.Visibility = Visibility.Visible; // Показывать контейнер с полями ввода
+            InputFieldsPanel.Visibility = Visibility.Visible; // показывать контейнер с полями ввода
             CLabel.Visibility = (sender == QuadraticRadioButton) ? Visibility.Visible : Visibility.Collapsed;
             CTextBox.Visibility = (sender == QuadraticRadioButton) ? Visibility.Visible : Visibility.Collapsed;
             if (sender != QuadraticRadioButton)
             {
-                CTextBox.Text = ""; // Очищаем поле C, чтобы не было путаницы
+                CTextBox.Text = ""; // очищаем поле c, чтобы не было путаницы
             }
 
         }
@@ -70,8 +70,29 @@ namespace pr3_2
                     c = double.Parse(CTextBox.Text);
                 }
 
+                if (QuadraticRadioButton.IsChecked.Value && a == 0) // проверка для квадратного уравнения
+                {
+                    MessageBox.Show("При a = 0 квадратное уравнение становится линейным. Решаем его как линейное.");
+                    double x = -c / b; // решение линейного уравнения bx + c = 0
+                    ResultTextBox.Text = x.ToString();
+                    return;
+                }
+
                 if (LinearRadioButton.IsChecked.Value)
                 {
+                    if (a == 0)
+                    {
+                        if (b == 0)
+                        {
+                            ResultTextBox.Text = "Бесконечно много решений";
+                            return;
+                        }
+                        else
+                        {
+                            ResultTextBox.Text = "Решений нет";
+                            return;
+                        }
+                    }
                     double x = -b / a;
                     ResultTextBox.Text = x.ToString();
                 }
@@ -81,7 +102,7 @@ namespace pr3_2
 
                     if (discriminant < 0)
                     {
-                        ResultTextBox.Text = "Нет действительных корней.";
+                        ResultTextBox.Text = "Нет действительных корней";
                     }
                     else if (discriminant == 0)
                     {
@@ -98,11 +119,11 @@ namespace pr3_2
             }
             catch (FormatException)
             {
-                MessageBox.Show("Пожалуйста, введите числовые значения.");
+                MessageBox.Show("Пожалуйста, введите числовые значения");
             }
             catch (DivideByZeroException)
             {
-                MessageBox.Show("Ошибка: Деление на ноль."); // Более точное сообщение
+                MessageBox.Show("Ошибка: Деление на ноль"); // более точное сообщение
             }
             catch (Exception ex)
             {
@@ -110,7 +131,7 @@ namespace pr3_2
             }
         }
 
-        //Обработчик, который не позволяет вводить в TextBox ничего, кроме чисел
+        // обработчик, который не позволяет вводить в TextBox ничего, кроме чисел
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9,-]+");
