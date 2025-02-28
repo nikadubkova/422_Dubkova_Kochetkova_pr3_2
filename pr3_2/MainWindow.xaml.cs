@@ -73,12 +73,12 @@ namespace pr3_2
                 if (QuadraticRadioButton.IsChecked.Value && a == 0) // проверка для квадратного уравнения
                 {
                     MessageBox.Show("При a = 0 квадратное уравнение становится линейным. Решаем его как линейное.");
-                    if (b == 0 & c != 0)
+                    if (b == 0 && c != 0)
                     {
                         ResultTextBox.Text = "Решений нет";
                         return;
                     }
-                    if (b == 0 & c == 0)
+                    if (b == 0 && c == 0)
                     {
                         ResultTextBox.Text = "Бесконечно много решений";
                         return;
